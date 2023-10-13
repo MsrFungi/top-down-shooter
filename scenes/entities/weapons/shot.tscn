@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://phuaf38yfd0q"]
+
+[ext_resource type="Script" path="res://scenes/entities/weapons/shot.gd" id="1_sj2co"]
+
+[sub_resource type="Curve" id="Curve_d622n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[node name="Shot" type="RayCast2D"]
+script = ExtResource("1_sj2co")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+width_curve = SubResource("Curve_d622n")
