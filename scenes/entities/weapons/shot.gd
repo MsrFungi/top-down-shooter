@@ -15,6 +15,10 @@ func _ready():
 	if is_colliding():
 		#var collision = get_collider()
 		shot_point = get_collision_point() - position
+		#Mostrar partículas cuando la bala impacte
+		$GPUParticles2D.position = shot_point
+		$GPUParticles2D.emitting = true
+		
 	$Line2D.set_point_position(0, Vector2.ZERO)
 	$Line2D.set_point_position(1, shot_point)
 	enabled = false
@@ -22,8 +26,7 @@ func _ready():
 	#Tween de animación para la línea
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property($Line2D, "width", 0, 0.1,)
-	tween.tween_callback(queue_free)
-	
-	
-	
-	
+
+
+func _on_audio_stream_player_2d_finished():
+	queue_free()

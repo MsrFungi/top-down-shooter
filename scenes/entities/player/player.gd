@@ -28,12 +28,19 @@ func _physics_process(delta):
 	direction.x = Input.get_axis("ui_left", "ui_right")
 	direction.y = Input.get_axis("ui_up", "ui_down")
 	
-	if direction:
-		velocity = direction.normalized() * SPEED
-	else:
-		velocity = Vector2(0, 0)
+	velocity = velocity.lerp(direction.normalized() * SPEED, 0.1)
+	if velocity.length() < 5:
+		velocity = Vector2.ZERO
+	#Volumen de los pasos basando en la velocidad de movimiento
+	var volume : float = (velocity.length() / SPEED) * 10.0 - 10.0
+	$Textures/Legs/RightFootstep.volume_db = volume
+	$Textures/Legs/LeftFootstep.volume_db = volume
+	#if direction:
+		#velocity = direction.normalized() * SPEED
+	#else:
+	#	velocity = Vector2(0, 0)
 	
-	var blend_position = (velocity.rotated(-player_to_mouse.angle())).normalized()
+	var blend_position = (velocity.rotated(-player_to_mouse.angle())) / SPEED
 	
 	$Textures/Legs/AnimationTree["parameters/blend_position"] = blend_position
 	
